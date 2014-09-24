@@ -1,0 +1,15 @@
+.DS_Store
+*~
+*.pyc
+*.prev
+*.sav
+*.old
+*.pem
+README.html
+build/*
+dist/*
+pyxterm.egg-info/*
+BAK
+IGNORE
+ORIG
+SUBMIT
