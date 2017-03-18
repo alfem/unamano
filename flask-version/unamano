@@ -6,29 +6,43 @@ import requests
 import subprocess
 import time
 import uuid
+import os
 
 base_url = "http://alfem.pythonanywhere.com/"
 sleep_time=10
 
+hostname=os.uname()[1]
+
+with open("/etc/pclabel") as f:
+    pclabel=f.readline()
+
 
 uid=uuid.uuid1()
-print "SESSION ID", uid
+
+print "HOSTNAME:", hostname
+print "PC LABEL:", pclabel
+print "SESSION ID:", uid
 
 ses = requests.Session()
-ses.headers = {'sessionid':uid}
+ses.headers = {'hostname':hostname,'pclabel':pclabel,'sessionid':uid}
 
 last_command=""
 
 while True:
-   resp=ses.get(base_url+"cmd",headers=ses.headers)
+   resp=ses.get(base_url+"client",headers=ses.headers)
    
    print resp.status_code
    print resp.text   
 
    command=resp.text
    if command != "" and command != last_command:
-       output=subprocess.check_output(command,stderr=subprocess.STDOUT,shell=True)
-       resp=ses.post(base_url+"cmd",data={"output":output},headers=ses.headers)
+       output=open("/tmp/unamano.log","w")
+       subprocess.call(command,stdout=output,stderr=subprocess.STDOUT,shell=True)
+       output.close()
+       files = {'output': open('/tmp/unamano.log','rb')}
+       data = {"uid":uid }
+       resp=ses.post(base_url+"client",data=data,files=files,headers=ses.headers)
+
        print resp.status_code
        last_command=command
    
