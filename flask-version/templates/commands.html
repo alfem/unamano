@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>UNAMANO: Commands</title>
+</head>
+
+<body>
+
+    <h1>SESSION: {{ uid }}</h1>
+    <h2>COMMANDS</h2>
+
+    <ol id="navigation">
+    {% for item in commands %}
+        <li><a href="/output/{{ uid }}/{{ item }}">{{ item }}</a></li>
+    {% endfor %}
+    </ol>
+
+</body>
+
