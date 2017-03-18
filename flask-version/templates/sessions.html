@@ -9,8 +9,8 @@
     <h1>SESSIONS</h1>
 
     <ol id="navigation">
-    {% for item in sessions %}
-        <li><a href="session/{{ item }}">{{ item }}</a></li>
+    {% for key, value in sessions.items() %}
+        <li><a href="session/{{ key }}">{{ value }}</a></li>
     {% endfor %}
     </ol>
 

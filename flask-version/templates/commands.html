@@ -7,6 +7,16 @@
 <body>
 
     <h1>SESSION: {{ uid }}</h1>
+
+    <form action="{{ url_for('command') }}" method=post>
+      <dl>
+        <dt>Command:
+        <dd><input type=hidden name=uid value={{ uid }}>
+        <dd><input type=text size=30 name=command>
+        <dd><input type=submit value=Send>
+      </dl>
+    </form>
+
     <h2>COMMANDS</h2>
 
     <ol id="navigation">
